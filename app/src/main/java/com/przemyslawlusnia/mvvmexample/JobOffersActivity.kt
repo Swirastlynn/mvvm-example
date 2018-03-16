@@ -3,9 +3,9 @@ package com.przemyslawlusnia.mvvmexample
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_job_offers.*
 
 class JobOffersActivity : AppCompatActivity() {
@@ -28,13 +28,13 @@ class JobOffersActivity : AppCompatActivity() {
 
   override fun onResume() {
     super.onResume()
-
     jobOffersViewModel.jobOffers.observe(this, Observer<List<JobOfferUIModel>> {
       it?.let {
+        progressBar.visibility = View.GONE
         adapter.setItems(it)
       }
     })
 
-    Handler().postDelayed({ jobOffersViewModel.updateJobOffers() }, 1000)
+    jobOffersViewModel.updateJobOffers()
   }
 }
